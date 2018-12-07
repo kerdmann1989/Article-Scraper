@@ -1,0 +1,28 @@
+{
+  "name": "article-scraper",
+  "version": "1.0.0",
+  "description": "Web scraper using Cheerio and Mongoose",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kerdmann1989/Article-Scraper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kerdmann1989/Article-Scraper/issues"
+  },
+  "homepage": "https://github.com/kerdmann1989/Article-Scraper#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.12",
+    "mongoose": "^5.3.14",
+    "morgan": "^1.9.1"
+  }
+}
