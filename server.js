@@ -30,23 +30,55 @@ app.engine(
     "handlebars",
     exphbs({
       defaultLayout: "main"
+    //   partialsDir: path.join(__dirname, "/views/layouts/partials")
+
     })
   );
 
-  app.set("view engine", "handlebars");
-
+app.set("view engine", "handlebars");
 //Connect to the Mongo DB
+
 mongoose.connect("mongodb://localhost/kslScraper", {
     useNewUrlParser: true });
+
 
 //Routes
 
 //A GET route for scraping the website
+// app.get("/", function(req, res) {
+    
+//     res.render("index")
+// })
+// app.get("/", function(req, res) {
+//     db.Article.find({"saved": false}, function(error, data) {
+//       var hbsObject = {
+//         article: data
+//       };
+//       console.log("THIS IS IT", hbsObject);
+//       res.render("index", hbsObject);
+//     });
+//   });
+
+  app.get("/", (req, res) => {
+    db.Article.find({})
+        .then(function (dbArticle) {
+            // If we were able to successfully find Articles, send them back to the client
+            const retrievedArticles = dbArticle;
+            let hbsObject;
+            hbsObject = {
+                articles: dbArticle
+            };
+            res.render("index", hbsObject);        
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
+
 app.get("/scrape", function(req, res) {
     axios.get("https://www.ksl.com").then(function(response) {
-
-        
-    // axios.get("http://www.echojs.com").then(function(response) {
+   
         var $ = cheerio.load(response.data);
         $("div.headline").each(function(i, element) {
             var result = {};
@@ -55,20 +87,9 @@ app.get("/scrape", function(req, res) {
             result.title = $(this).find("a").text();
             result.summary = $(this).find("h5").text();
            
-
-        // $("article h2").each(function(i, element) {
-
-        
-            // var result = {};
-            // result.title = $(this)
-            //     .children("a")
-            //     .text();
-            // result.link = $(this)
-            //     .children("a")
-            //     .attr("href");
         db.Article.create(result)
         .then(function(dbArticle) {
-            console.log(dbArticle);
+            // console.log("This is dbArticle", dbArticle);
         })
         .catch(function(err) {
             console.log(err);
@@ -113,5 +134,3 @@ app.post("/articles/:id", function(req, res) {
     app.listen(PORT, function() {
         console.log("App running on port " + PORT + "!");
     });
-
-

@@ -1,11 +1,11 @@
 //Grab the articles as a JSON
-$.getJSON("/articles", function(data) {
-    //For each one
-    for (var i=0; i < data.length; i++) {
-        //Display the apropos info on the page
-        $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + "https://www.ksl.com" + data[i].link + "<br />" + data[i].summary + "</p>");
-    }
-});
+// $.getJSON("/articles", function(data) {
+//     //For each one
+//     for (var i=0; i < data.length; i++) {
+//         //Display the apropos info on the page
+//         $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + "https://www.ksl.com" + data[i].link + "<br />" + data[i].summary + "</p>");
+//     }
+// });
 
 $(".scrape").on("click", function () {
     $.ajax({
@@ -14,13 +14,27 @@ $(".scrape").on("click", function () {
     })
     .done(function(data) {
         location.reload();
+        // window.location = "/"
+        // location.reload();
     });
-   
+
 });
 
+$(".save-btn").on("click", function() {
+   alert ("clicked")
+    var thisId = $(this).attr("data-id");
+    $.ajax({
+        method: "POST",
+        url: "/articles/" + thisId
+    }).done(function(data) {
+        window.location = "/"
+    })
+});
 
-//Whenever somone clicks a p tag
-$(document).on("click", "p", function() {
+//Whenever somone clicks Note button tag
+$(".note-btn").on("click", function() {
+    // event.preventDefault();
+   // $(document).on("click", "p", function() {
     //Empty the notes from the note section
     $("#notes").empty();
     //Save the id from the p tag
@@ -39,12 +53,12 @@ $(document).on("click", "p", function() {
         //An input to enter a new title
         $("#notes").append("<input id='titleinput' name='title' >");
         //A textarea to add a new note body
-        $("#notes").append("<textarea id = 'bodyinput' name='body'></textarea>");
+        $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
         //A button to submit a new note, with the id of the article saved to it
         $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
         //If there's a note in the article
         if (data.note) {
-            //Place the title of the ntoe in the title input
+            //Place the title of the note in the title input
             $("#titleinput").val(data.note.title);
             //Place the body in the note of the body textarea
             $("#bodyinput").val(data.note.body);
@@ -71,7 +85,7 @@ $(document).on("click", "#savenote", function() {
     //With that done
     .then(function(data) {
         //Log the response
-        console.log(data);
+        console.log("Here is the data", data);
         //Emtpy the notes section
         $("#notes").empty();
     });
