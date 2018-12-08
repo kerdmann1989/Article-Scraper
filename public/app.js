@@ -94,3 +94,7 @@ $(document).on("click", "#savenote", function() {
     $("#titleinput").val("");
     $("#bodyinput").val("");
 });
+
+$(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
