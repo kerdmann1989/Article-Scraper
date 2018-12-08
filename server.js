@@ -12,6 +12,11 @@ var db = require("./models");
 
 var PORT = 3000;
 
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/kslScraper";
+
+mongoose.connect(MONGODB_URI);
+
 //Initialize Express
 var app = express();
 
@@ -36,8 +41,8 @@ app.engine(
   app.set("view engine", "handlebars");
 
 //Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/kslScraper", {
-    useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/kslScraper", {
+//     useNewUrlParser: true });
 
 //Routes
 
