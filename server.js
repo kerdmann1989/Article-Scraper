@@ -125,14 +125,71 @@ app.post("/articles/:id", function(req, res) {
     db.Note.create(req.body)
     .then(function(dbNote) {
         return db.Article.findOneAndUpdate({ _id: req.params.id },
-            {note: dbNote._id }, { new: true });
+            {$push: {note: dbNote._id }}, { new: true });
         })
         .then(function(dbArticle) {
-            res.json(dbArticle);
+            console.log(dbArticle._id);
+            db.Article.findOne({_id: req.params.id})
+            .populate("note")
+            .then(function(dbArticle) {
+                res.json(dbArticle);
+            })
         })
         .catch(function(err) {
             res.json(err)
         });
+    });
+
+    //SAVED ARTICLES
+    app.post("/articles/save/:id", function(req, res) {
+        // Use the article id to find and update its saved boolean
+        Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": true})
+        // Execute the above query
+        .exec(function(err, doc) {
+          // Log any errors
+          if (err) {
+            console.log(err);
+          }
+          else {
+            // Or send the document to the browser
+            res.send(doc);
+          }
+        });
+  });
+   
+
+    //RETRIEVE ALL NOTES
+    app.get("/notes", function(req, res) {
+        db.Note.find({})
+        .then(function(dbArticle) {
+            console.log(dbArticle._id);
+            db.Article.findOne({_id: req.params.id})
+            .populate("note")
+            .then(function(dbArticle) {
+                res.json(dbArticle);
+            })
+        })
+        .catch(function(err) {
+            res.json(err)
+        });
+    });
+
+    //DELETE NOTE
+    app.delete("/note/:id", function (req, res) {
+        // Create a new note and pass the req.body to the entry
+        db.Note.findByIdAndRemove({ _id: req.params.id })
+            .then(function (dbNote) {
+    
+                return db.Article.findOneAndUpdate({ note: req.params.id }, { $pullAll: [{ note: req.params.id }]});
+            })
+            .then(function (dbArticle) {
+                // If we were able to successfully update an Article, send it back to the client
+                res.json(dbArticle);
+            })
+            .catch(function (err) {
+                // If an error occurred, send it to the client
+                res.json(err);
+            });
     });
 
     app.listen(PORT, function() {
