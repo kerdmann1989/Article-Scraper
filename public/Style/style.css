@@ -1,29 +1,24 @@
 body {
     background-image: url("../Style/Newspapers1.jpg");
     font-family: 'Sanchez', serif;
-
-
-}
-   
-
-.articleContainer {
-    background-color: green;
-    /* padding: 20px 5px; */
 }
 
 #wrapper { 
     width: 960px;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 5%;
     background-color: rgb(35, 57, 66);
+    box-shadow: inset 0 0 90px 4px rgba(255,255,255,.5);
 }
-/* #articles {
-    display: inline-block;
-    overflow: auto;
-    width: 60%;
-    height: 700px;
-} */
+
+#read {
+    color: orange;
+}
+.blur-box {
+    background-color: #555;
+    box-shadow: 0 0 5px 10px #555;
+}
+
 #notes {
     float: right;
     width:70%;
@@ -65,7 +60,6 @@ textarea {
 .titleOfArticle {
    color: rgb(35, 57, 66);
    font-size: 33px;;
-
 }
 
 .title {
@@ -73,7 +67,8 @@ textarea {
 }
 
 .scrape {
-    text-align:center
+    font-size: 20px;
+    font-family: 'Sanchez', serif;
 
 }
 
@@ -99,7 +94,6 @@ textarea {
  #bodyinput {
      padding: 20px;
      font-family: 'Sanchez', serif;
-
  }
 
  .noteBox {

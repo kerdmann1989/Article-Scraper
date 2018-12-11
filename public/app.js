@@ -47,9 +47,9 @@ $(".note-btn").on("click", function() {
         // $(`.${thisId}notes`).append("<h5>" + data.title + "</h5>");
 
         //An input to enter a new title
-        $(`.${thisId}notes`).append("<input id='titleinput' name='title' placeholder='Enter Note Title'>");
+        $(`.${thisId}notes`).append("<input id='titleinput' class='titleinput' name='title' placeholder='Enter Note Title'>");
         //A textarea to add a new note body
-        $(`.${thisId}notes`).append("<textarea id='bodyinput' name='body'></textarea>");
+        $(`.${thisId}notes`).append("<textarea id='bodyinput' class='bodyinput' name='body'></textarea>");
         //A button to submit a new note, with the id of the article saved to it
         $(`.${thisId}notes`).append("<br><button data-id='" + data._id + "' id='savenote'class='btn-floating btn-large waves-effect waves-light'>Save Note</button>");
         $(`.${thisId}notes`).append("<button data-id='" + data._id + "' id='close' class='btn-floating btn-large waves-effect waves-light'>Close Note</button><br>");
@@ -61,8 +61,10 @@ $(".note-btn").on("click", function() {
             
             //Place the title of the note in the title input
             $("#titleinput").val(data.note.title);
+
             //Place the body in the note of the body textarea
             $("#bodyinput").val(data.note.body);
+
         }
     });
 });
@@ -139,6 +141,7 @@ $(document).on("click", "#view", function() {
     //Also, remove the values entered in the input and textarea for note entry
     $("#titleinput").val("");
     $("#bodyinput").val("");
+    
 });
 
 // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -152,7 +155,6 @@ $(document).on('click', '.delete', function (){
     $.ajax(`/note/${id}`, {
         type: "DELETE"
     }).then(function () {
-      
        location.reload();
     });
 });
