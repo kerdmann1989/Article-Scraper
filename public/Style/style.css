@@ -57,6 +57,12 @@ textarea {
     font-family: 'Sanchez', serif;
 }
 
+.titleinput {
+    color: rgb(35, 57, 66);
+    font-size: 14px;
+    font-family: 'Sanchez', serif;
+}
+
 .titleOfArticle {
    color: rgb(35, 57, 66);
    font-size: 33px;;
@@ -82,7 +88,7 @@ textarea {
     color: white;
 }
 
-#view, #close, #savenote {
+#view, #close, .savenote {
     background-color: rgb(35, 57, 66);
      font-family: 'Sanchez', serif;
  }
